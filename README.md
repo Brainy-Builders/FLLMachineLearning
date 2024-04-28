@@ -35,3 +35,6 @@ Upload all your .json files to a google drive folder and open this Google Colab 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/15q6PGZ2Rg7jCcNPHDlSWeMEhlLRr61Yb?usp=sharing)
 
 
+# License 
+## **Boost Software License 1.0**
+You can redistribute, reproduce, modify, and sell this software as long as you also use the BSL license and give some credit
