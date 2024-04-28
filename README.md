@@ -23,11 +23,15 @@ Source code for recording data to train color detection machine learning models 
 1. Run the project
 2. Check the EV3 screen or Spike Prime console for instructions
 3. Place your color sensors on the first color
-3. move through the options to select the first color you want to train
-4. move your robot around slightly while still staying on the color
-5. press the stop button once you've got enough data (~1000 entries per color which can be split over multiple readings at multiple times of day and if possible multiple boards)
-6. Copy the stuff in between the square brackets into a file with the format ```colorname.json```
-7. Repeat with all your colors
+4. move through the options to select the first color you want to train
+5. move your robot around slightly while still staying on the color
+6. press the stop button once you've got enough data (~1000 entries per color which can be split over multiple readings at multiple times of day and if possible multiple boards)
+7. Copy the stuff in between the square brackets into a file with the format ```colorname.json```
+ie.
+```javascript
+[{"id": "Port.S1", "reflectivity": 13, "truth": "Black", "blue": 10, "classification": "Black", "ambient": -73, "red": 12, "green": 13}, {"id": "Port.S1", "reflectivity": 12, "truth": "Black", "blue": 9, "classification": "Black", "ambient": 1, "red": 11, "green": 12},...]
+```
+8. Repeat with all your colors
 ## Machine Learning
 Upload all your .json files to a google drive folder and open this Google Colab instance
 <br>
