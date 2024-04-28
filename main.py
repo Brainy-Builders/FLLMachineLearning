@@ -1,5 +1,11 @@
 #!/usr/bin/env pybricks-micropython
 
+#          Copyright Brainy Builders 2024.
+# Distributed under the Boost Software License, Version 1.0.
+#    (See accompanying file LICENSE or copy at
+#          https://www.boost.org/LICENSE_1_0.txt)
+
+
 try: # we test to see if we are on SPIKE or EV3
     import hub
     from hub import button
