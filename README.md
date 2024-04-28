@@ -4,11 +4,11 @@ Source code for recording data to train color detection machine learning models 
 ## Installation
 ### For EV3
 1. Follow the PyBricks installation guide [here](https://pybricks.com/ev3-micropython/startinstall.html)
-2. Install VS Code and the ev3Dev extension
+2. Install [VS Code](https://code.visualstudio.com/) and the [ev3Dev extension](https://marketplace.visualstudio.com/items?itemName=ev3dev.ev3dev-browser)
 3. Clone this repository in VS Code
 
 ### For Spike Prime
-1. Create a new **python** Spike Prime project
+1. Create a new **python** [Spike Prime project](https://spike.legoeducation.com/prime/lobby)
 2. Clone this repository to your computer
 3. Copy the contents of **main.py** to the project
 
