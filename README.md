@@ -11,7 +11,8 @@ Source code for recording data to train color detection machine learning models 
 1. Create a new **python** [Spike Prime project](https://spike.legoeducation.com/prime/lobby)
 2. Clone this repository to your computer
 3. Copy the contents of **main.py** to the project
-
+#### NOTE
+The spike prime app console is unable to process much data, so you may need to collect data in smaller increments of ~20 readings (I spent an entire night trying to circumvent this limitation, there is no official solution)
 ### Editing the project
 4. Remove the pybricks shebang if you are using spike prime
 ```python

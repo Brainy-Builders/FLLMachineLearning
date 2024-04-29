@@ -1,9 +1,9 @@
 #!/usr/bin/env pybricks-micropython
 
-#          Copyright Brainy Builders 2024.
+#        Copyright Brainy Builders 2024.
 # Distributed under the Boost Software License, Version 1.0.
 #    (See accompanying file LICENSE or copy at
-#          https://www.boost.org/LICENSE_1_0.txt)
+#        https://www.boost.org/LICENSE_1_0.txt)
 
 
 try: # we test to see if we are on SPIKE or EV3
@@ -13,21 +13,36 @@ try: # we test to see if we are on SPIKE or EV3
     import color as Color # cast it's name so it matches the same case as ev3
     from hub import port
     useSpike = True
+    #Get the string representations of color enum in spike
+    colorMap = {
+        -1:"Unknown",
+        0: "Color.BLACK",
+        1: "Color.MAGENTA",
+        2: "Color.PURPLE",
+        3: "Color.BLUE",
+        4: "Color.AZURE",
+        5:"Color.TURQUOISE",
+        6:"Color.GREEN",
+        7:"Color.YELLOW",
+        8:"Color.ORANGE",
+        9:"Color.RED",
+        10:"Color.WHITE"
+    }
 except ImportError:
     import pybricks
-    from pybricks.hubs import EV3Brick  
+    from pybricks.hubs import EV3Brick
     from pybricks.parameters import Port, Button, Color
     from pybricks.media.ev3dev import Font #for Display
     from pybricks.ev3devices import ColorSensor
     big_font = Font(size=14, bold=True) # A big font to choose color
     ev3 = EV3Brick()
-    
+
     useSpike = False
 
 import ujson as json
 import time # time is universal
 
-sensorsToCheck = [Port.S1] # You fill this in with which sensors are connected docs are here (ev3: https://pybricks.com/ev3-micropython/parameters.html#pybricks.parameters.Port, spikePrime: https://spike.legoeducation.com/prime/modal/help/lls-help-python#lls-help-python-spm-hub-port)
+sensorsToCheck = [port.A, port.B] # You fill this in with which sensors are connected docs are here (ev3: https://pybricks.com/ev3-micropython/parameters.html#pybricks.parameters.Port, spikePrime: https://spike.legoeducation.com/prime/modal/help/lls-help-python#lls-help-python-spm-hub-port)
 # If you want do do spike, it would be something like this:
 # port.A, port.B, etc...
 
@@ -39,12 +54,16 @@ if useSpike:
     #We have a universal definition of button pressed
     isLeftPressed = lambda: button.pressed(button.LEFT)
     isRightPressed = lambda: button.pressed(button.RIGHT)
-else: 
+
+    getColor = lambda x: colorMap[x] # Properly get the string representation of a color
+else:
     menuPrint = ev3.screen.print
     ev3.screen.set_font(big_font)
 
     isLeftPressed = lambda: Button.LEFT in ev3.buttons.pressed()
     isRightPressed = lambda: Button.RIGHT in ev3.buttons.pressed()
+
+    getColor = lambda x: str(x)
 
 
 
@@ -65,7 +84,7 @@ def select():
         color: A value from trainableColors
     '''
     currentIndex = 0
-    menuPrint("Starting with\n", str(trainableColors[currentIndex]))
+    menuPrint("Starting with\n", getColor(trainableColors[currentIndex]))
     while True:
         time.sleep(0.2) # We don't want to lag out the system (You may need to be patient for the button presses to register)
         if (isLeftPressed()):
@@ -101,8 +120,8 @@ def getColorData(port, trainingColor):
         'blue': blue,
         'ambient': ambient,
         'reflectivity': reflectivity,
-        'classification': str(colorEstimate).replace("Color.",""),
-        'truth': str(trainingColor).replace("Color.","")
+        'classification': getColor(colorEstimate).replace("Color.",""),
+        'truth': getColor(trainingColor).replace("Color.","")
     }
 
 def main():
@@ -114,14 +133,23 @@ def main():
     dataList = [] # Store all the data entries
     time.sleep(5)
     menuPrint("Go")
+    if useSpike: print("[")
     while True:
         if (isLeftPressed()): break # Stop collecting data
         for sensor in sensorsToCheck:
-            if (len(dataList)%10 == 0):
+            if (len(dataList)%10 == 0)and not useSpike:
                 menuPrint("{} Data entries".format(len(dataList))) # Tell us how many entries we've recorded so far
             sensorData = getColorData(sensor, colorToTrain)
-            dataList.append(sensorData) # Add our collected data to the list
-    print(json.dumps(dataList)) # print out all the data entries
+            if useSpike:
+                print(json.dumps(sensorData)+",")
+                time.sleep(1)
+            else:
+                dataList.append(sensorData) # Add our collected data to the list
+        
+    if useSpike:
+        print("]")
+    else:
+        print(json.dumps(dataList)) # print out all the data entries
 
 
 
