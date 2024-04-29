@@ -133,7 +133,7 @@ def main():
     dataList = [] # Store all the data entries
     time.sleep(5)
     menuPrint("Go")
-    if useSpike: print("[")
+    if useSpike: print("[") # Spike we stream json continuously instead of all at the end
     while True:
         if (isLeftPressed()): break # Stop collecting data
         for sensor in sensorsToCheck:
@@ -147,7 +147,7 @@ def main():
                 dataList.append(sensorData) # Add our collected data to the list
         
     if useSpike:
-        print("]")
+        print("]") # end continuous json streaming
     else:
         print(json.dumps(dataList)) # print out all the data entries
 
