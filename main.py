@@ -92,7 +92,7 @@ def select():
         if (isRightPressed()):
             currentIndex+=1 # The right button cycles through the color
             currentIndex = currentIndex % len(trainableColors)
-            menuPrint("Selected color: \n", trainableColors[currentIndex]) # Show the new selected color
+            menuPrint("Selected color: \n", getColor(trainableColors[currentIndex])) # Show the new selected color
 
 def getColorData(port, trainingColor):
     '''
